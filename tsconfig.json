@@ -19,7 +19,11 @@
     ],
     "paths": {
       "@*": ["./src/*"],
-      "@middleware": ["./src/middleware*"]
+      "@middleware": ["./src/middleware*"],
+      "@utils": ["./src/utils*"],
+      "@constants": ["./src/utils/constants*"],
+      "@types": ["./src/utils/types*"],
+      "@components": ["./src/components*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -1,7 +1,10 @@
 import { AuthProvider, SupportedAuthProvider } from '@toolpad/core';
-import NextAuth from 'next-auth';
+import NextAuth, { User } from 'next-auth';
 import type { Provider } from 'next-auth/providers';
 import Credentials from 'next-auth/providers/credentials';
+import { apiService } from '@api/api-service';
+import { LoginResponse } from '@api/auth/use-post-login';
+import { AUTH_API } from '@utils/constants/api-endpoints';
 
 const providers: Provider[] = [
   Credentials({
@@ -10,28 +13,24 @@ const providers: Provider[] = [
       password: { label: 'Password', type: 'password' },
     },
     name: 'credentials',
-    async authorize(c) {
-      const response = await fetch('http://localhost:4000/auth/login', {
-        method: 'POST',
-        body: JSON.stringify({ email: c.email, password: c.password }),
-        headers: { 'Content-Type': 'application/json' },
+    async authorize({ email, password }) {
+      const response = await apiService.postRequest<LoginResponse>({
+        path: AUTH_API.LOGIN,
+        body: { email, password },
+        includeAccessToken: false,
       });
-
-      if (!response.ok) {
+      if (!response.accessToken) {
         return null;
       }
 
-      const userData = await response.json();
-
-      if (!userData) return null;
-
-      return {
-        id: 'test',
-        name: 'Test User222',
-        email: String(c.email),
-        role: 'admin',
-        accessToken: userData.accessToken,
+      const userData: User = {
+        id: response.user.uuid,
+        email: response.user.email,
+        name: response.user.email,
+        accessToken: response.accessToken,
+        refreshToken: response.refreshToken,
       };
+      return userData;
     },
   }),
 ];
@@ -64,16 +63,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return false; // Redirect unauthenticated users to login page
     },
     async session({ session, token }) {
-      session.user.role = token.role;
       session.user.accessToken = token.accessToken;
+      session.user.refreshToken = token.refreshToken;
       return session;
     },
-    async jwt(params) {
-      if (params.user) {
-        params.token.role = params.user.role;
-        params.token.accessToken = params.user.accessToken;
+    async jwt({ user, token, trigger, session }) {
+      if (user || (trigger === 'update' && session?.accessToken && session?.refreshToken)) {
+        token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
       }
-      return params.token;
+      return token;
     },
   },
 });
