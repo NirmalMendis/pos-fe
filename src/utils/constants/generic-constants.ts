@@ -5,7 +5,7 @@ export const HTTP_STATUS_CODES = {
 };
 
 export const BRANDING = {
-  title: 'My Toolpad Core Next.js App',
+  title: 'Point of Sale',
 };
 
 export const AUTHENTICATION = {
