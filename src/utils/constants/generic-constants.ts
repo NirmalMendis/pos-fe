@@ -12,3 +12,8 @@ export const AUTHENTICATION = {
   signIn,
   signOut,
 };
+
+export const DATAGRID_CONSTANTS = {
+  MUI_DATAGRID_DEFAULT_ROW_HEIGHT: 35,
+  DEFAULT_PAGE_SIZE: 10,
+};

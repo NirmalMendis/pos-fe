@@ -1,6 +1,7 @@
 export const AUTH_ENDPOINT = 'auth';
-export const USER_ENPOINT = 'user';
+export const USER_ENPOINT = 'users';
 export const METADATA_ENDPOINT = 'metadata';
+export const ITEM_ENDPOINT = 'items';
 
 export const AUTH_API = {
   LOGIN: `${AUTH_ENDPOINT}/login`,
@@ -16,4 +17,11 @@ export const USER_API = {
   GET_USER: (id: number) => `${USER_ENPOINT}/${id}`,
   PATCH_USER_ACTIVE_BRANCH: `${USER_ENPOINT}/active-branch`,
   GET_USER_PERMISSIONS: `${USER_ENPOINT}/permissions`,
+};
+
+export const ITEM_API = {
+  GET_ITEMS_BY_PAWN_TICKET_ID: (id: number) => `${ITEM_ENDPOINT}/pawn-ticket/${id}`,
+  DELETE_ITEM: (id: number) => `${ITEM_ENDPOINT}/${id}`,
+  ADD_ITEM: `${ITEM_ENDPOINT}`,
+  PATCH_ITEM: (id: number) => `${ITEM_ENDPOINT}/${id}`,
 };

@@ -3,7 +3,7 @@ import NextAuth, { User } from 'next-auth';
 import type { Provider } from 'next-auth/providers';
 import Credentials from 'next-auth/providers/credentials';
 import { apiService } from '@api/api-service';
-import { LoginResponse } from '@api/auth/use-post-login';
+import { LoginResponse } from '@api/auth/auth.types';
 import { AUTH_API } from '@utils/constants/api-endpoints';
 
 const providers: Provider[] = [
@@ -24,12 +24,13 @@ const providers: Provider[] = [
       }
 
       const userData: User = {
-        id: response.user.uuid,
+        id: response.user.id,
         email: response.user.email,
         name: response.user.email,
         accessToken: response.accessToken,
         refreshToken: response.refreshToken,
       };
+
       return userData;
     },
   }),

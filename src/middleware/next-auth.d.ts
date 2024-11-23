@@ -1,3 +1,4 @@
+import POSUser from '@utils/types/pos-user';
 import 'next-auth';
 
 declare module 'next-auth' {
@@ -5,8 +6,7 @@ declare module 'next-auth' {
     user?: DefaultSession['user'];
   }
 
-  interface User {
-    id: string;
+  interface User extends Pick<POSUser, 'id' | 'email'> {
     accessToken: string;
     refreshToken: string;
   }

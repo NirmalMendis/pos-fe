@@ -1,4 +1,5 @@
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { Navigation } from '@toolpad/core';
@@ -18,6 +19,11 @@ const NAVIGATION: Navigation = [
   {
     title: 'Dashboard',
     icon: <DashboardIcon />,
+  },
+  {
+    segment: 'items',
+    title: 'Items',
+    icon: <LabelImportantIcon />,
   },
   {
     segment: 'orders',
