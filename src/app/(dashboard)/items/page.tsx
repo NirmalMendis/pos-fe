@@ -1,9 +1,11 @@
 'use client';
 import { GridColDef } from '@mui/x-data-grid';
 import { useState } from 'react';
+import useGetItems from '@api/items/use-get-items';
 import usePostAddItem from '@api/items/use-post-add-item';
 import CrudLayout from '@components/layouts/crud-layout/crud-layout';
 import { ADD_ITEM_FORM_ID } from '@utils/constants/form-constants';
+import { DATAGRID_CONSTANTS } from '@utils/constants/generic-constants';
 import AddEditItemForm from './add-edit-item-form';
 import { AddEditItemFormProps } from './items.types';
 
@@ -11,6 +13,14 @@ export default function ItemsPage() {
   const [openCreateItemModal, setOpenCreateItemModal] = useState(false);
 
   const addItemPostMutation = usePostAddItem();
+  const [paginationModel, setPaginationModel] = useState({
+    pageSize: DATAGRID_CONSTANTS.DEFAULT_PAGE_SIZE,
+    page: DATAGRID_CONSTANTS.DEFAULT_START_PAGE,
+  });
+  const itemsGetQuery = useGetItems({
+    page: paginationModel.page + 1,
+    pageSize: paginationModel.pageSize,
+  });
 
   const handleOpenCloseCreateItemModal = () => {
     setOpenCreateItemModal((prev) => !prev);
@@ -53,6 +63,11 @@ export default function ItemsPage() {
       handleOpenCloseCreateEntityModal={handleOpenCloseCreateItemModal}
       dataGrid={{
         columns: columns,
+        rows: itemsGetQuery.data?.data,
+        rowCount: itemsGetQuery.data?.pager.totalItems,
+        paginationModel: paginationModel,
+        onPaginationModelChange: setPaginationModel,
+        loading: itemsGetQuery.isFetching,
       }}
     />
   );

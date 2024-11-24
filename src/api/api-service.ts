@@ -38,11 +38,17 @@ export const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-axiosInstance.interceptors.response.use((response) => {
-  if (response.data.data) return response.data.data;
-  else if (response.headers['content-type'] === 'application/pdf') {
-    return response.data;
+axiosInstance.interceptors.request.use((config) => {
+  const controller = new AbortController();
+
+  if (config.includeAccessToken && !config.headers['Authorization']) {
+    controller.abort();
   }
+
+  return {
+    ...config,
+    signal: controller.signal,
+  };
 });
 
 export const subscribeTokenRefresh = (cb: (token: string) => void) => {

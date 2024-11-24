@@ -7,6 +7,8 @@ import { HTTP_STATUS_CODES } from '@utils/constants/generic-constants';
 import ENV_CONFIGS from './get-env-config';
 
 let isRefreshing = false;
+let hasAttachedResponseInterceptor = false;
+let hasAttachedRequestInterceptor = false;
 
 const useSetupAxios = () => {
   const { data: session, update } = useSession();
@@ -74,11 +76,17 @@ const useSetupAxios = () => {
   }, [update]);
 
   useEffect(() => {
-    setupRequestInterceptor();
+    if (!hasAttachedRequestInterceptor) {
+      setupRequestInterceptor();
+      hasAttachedRequestInterceptor = true;
+    }
   }, [setupRequestInterceptor]);
 
   useEffect(() => {
-    setupResponseInterceptor();
+    if (!hasAttachedResponseInterceptor) {
+      setupResponseInterceptor();
+      hasAttachedResponseInterceptor = true;
+    }
   }, [setupResponseInterceptor]);
 };
 

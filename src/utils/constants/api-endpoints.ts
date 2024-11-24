@@ -20,7 +20,7 @@ export const USER_API = {
 };
 
 export const ITEM_API = {
-  GET_ITEMS_BY_PAWN_TICKET_ID: (id: number) => `${ITEM_ENDPOINT}/pawn-ticket/${id}`,
+  GET_ITEMS: `${ITEM_ENDPOINT}`,
   DELETE_ITEM: (id: number) => `${ITEM_ENDPOINT}/${id}`,
   ADD_ITEM: `${ITEM_ENDPOINT}`,
   PATCH_ITEM: (id: number) => `${ITEM_ENDPOINT}/${id}`,
