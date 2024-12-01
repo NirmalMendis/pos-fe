@@ -1,1 +1,2 @@
-export const ADD_ITEM_FORM_ID = 'ADD_ITEM_FORM';
+export const ADD_ITEM_FORM_ID = 'ADD_ITEM_FORM_ID';
+export const EDIT_ITEM_FORM_ID = 'EDIT_ITEM_FORM_ID';

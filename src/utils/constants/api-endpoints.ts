@@ -1,3 +1,5 @@
+import { Item } from '@utils/types/item.type';
+
 export const AUTH_ENDPOINT = 'auth';
 export const USER_ENPOINT = 'users';
 export const METADATA_ENDPOINT = 'metadata';
@@ -21,7 +23,8 @@ export const USER_API = {
 
 export const ITEM_API = {
   GET_ITEMS: `${ITEM_ENDPOINT}`,
-  DELETE_ITEM: (id: number) => `${ITEM_ENDPOINT}/${id}`,
+  GET_ITEM: (id: Item['id']) => `${ITEM_ENDPOINT}/${id}`,
+  DELETE_ITEM: (id: Item['id']) => `${ITEM_ENDPOINT}/${id}`,
   ADD_ITEM: `${ITEM_ENDPOINT}`,
-  PATCH_ITEM: (id: number) => `${ITEM_ENDPOINT}/${id}`,
+  PATCH_ITEM: (id: Item['id']) => `${ITEM_ENDPOINT}/${id}`,
 };

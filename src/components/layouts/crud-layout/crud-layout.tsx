@@ -7,7 +7,16 @@ import { DATAGRID_CONSTANTS } from '@utils/constants/generic-constants';
 import AddEditEntityDialog from './add-edit-entity-dialog';
 import { CrudLayoutProps } from './crud-layout.types';
 
-const CrudLayout: FC<CrudLayoutProps> = ({ entityTitle, addEntity, handleOpenCloseCreateEntityModal, openCreateEntityModal, dataGrid }) => {
+const CrudLayout: FC<CrudLayoutProps> = ({
+  entityTitle,
+  addEntity,
+  handleOpenCloseCreateEntityModal,
+  openCreateEntityModal,
+  editEntity,
+  handleOpenCloseEditEntityModal,
+  openEditEntityModal,
+  dataGrid,
+}) => {
   return (
     <Box>
       <Stack spacing={2}>
@@ -42,12 +51,23 @@ const CrudLayout: FC<CrudLayoutProps> = ({ entityTitle, addEntity, handleOpenClo
         </Box>
       </Stack>
       <AddEditEntityDialog
-        openCreateEntityModal={openCreateEntityModal}
+        openAddEditEntityModal={openCreateEntityModal}
         handleClose={handleOpenCloseCreateEntityModal}
         form={addEntity.form}
         formId={addEntity.formId}
         entityTitle={entityTitle}
+        actionTitle="Create"
       />
+      {editEntity ? (
+        <AddEditEntityDialog
+          openAddEditEntityModal={openEditEntityModal}
+          handleClose={handleOpenCloseEditEntityModal}
+          form={editEntity.form}
+          formId={editEntity.formId}
+          entityTitle={entityTitle}
+          actionTitle="Edit"
+        />
+      ) : null}
     </Box>
   );
 };

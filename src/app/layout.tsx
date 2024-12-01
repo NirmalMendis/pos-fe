@@ -10,6 +10,7 @@ import ReactQueryProvider from '@components/react-query-provider/react-query-pro
 import { AUTHENTICATION, BRANDING } from '@utils/constants/generic-constants';
 import { customTheme } from '@utils/helpers/theme';
 import { auth } from '../middleware/auth';
+import GenericProvider from '@components/generic-provider/generic-provider';
 
 const NAVIGATION: Navigation = [
   {
@@ -39,13 +40,15 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en" data-toolpad-color-scheme="light">
       <body>
         <SessionProvider session={session}>
-          <ReactQueryProvider>
-            <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-              <AppProvider navigation={NAVIGATION} branding={BRANDING} session={session} authentication={AUTHENTICATION} theme={customTheme}>
-                {props.children}
-              </AppProvider>
-            </AppRouterCacheProvider>
-          </ReactQueryProvider>
+          <GenericProvider>
+            <ReactQueryProvider>
+              <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+                <AppProvider navigation={NAVIGATION} branding={BRANDING} session={session} authentication={AUTHENTICATION} theme={customTheme}>
+                  {props.children}
+                </AppProvider>
+              </AppRouterCacheProvider>
+            </ReactQueryProvider>
+          </GenericProvider>
         </SessionProvider>
       </body>
     </html>

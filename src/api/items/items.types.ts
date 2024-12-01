@@ -8,3 +8,13 @@ export type PostAddItemResponse = Item;
 export type GetItemsResponse = PaginatedData<Item>;
 
 export type GetItemsRequest = Partial<OrderPaginatedRequest>;
+
+export type GetItemByIdRequest = Pick<Item, 'id'>;
+
+export type GetItemByIdResponse = Item;
+
+export type PatchItemRequest = Pick<Item, 'id'> & Partial<Item>;
+
+export type PatchItemResponse = Item;
+
+export type DeleteItemRequest = Item['id'];

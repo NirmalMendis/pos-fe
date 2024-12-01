@@ -2,6 +2,7 @@ import { signIn, signOut } from 'next-auth/react';
 
 export const HTTP_STATUS_CODES = {
   UNAUTHORIZED: 401,
+  INTERNAL_SERVER_ERROR: 500,
 };
 
 export const BRANDING = {
