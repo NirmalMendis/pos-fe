@@ -19,16 +19,17 @@ const providers: Provider[] = [
         body: { email, password },
         includeAccessToken: false,
       });
-      if (!response.accessToken) {
+
+      if (!response.data.data.accessToken) {
         return null;
       }
 
       const userData: User = {
-        id: response.user.id,
-        email: response.user.email,
-        name: response.user.email,
-        accessToken: response.accessToken,
-        refreshToken: response.refreshToken,
+        id: response.data.data.user.id,
+        email: response.data.data.user.email,
+        name: response.data.data.user.email,
+        accessToken: response.data.data.accessToken,
+        refreshToken: response.data.data.refreshToken,
       };
 
       return userData;
