@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import { useCallback, useEffect } from 'react';
 import { axiosInstance, excludedEndpoints, onRefreshed, subscribeTokenRefresh } from '@api/api-service';
 import { AUTH_API } from '@utils/constants/api-endpoints';
@@ -14,7 +14,8 @@ const useSetupAxios = () => {
   const { data: session, update } = useSession();
 
   const setupRequestInterceptor = useCallback(() => {
-    axiosInstance.interceptors.request.use((config) => {
+    axiosInstance.interceptors.request.use(async (config) => {
+      const session = await getSession();
       const jwt = session?.user.accessToken;
 
       if (config.includeAccessToken && config.headers) config.headers['Authorization'] = `Bearer ${jwt}`;
